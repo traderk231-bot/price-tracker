@@ -1,0 +1,32 @@
+{
+  "johnsons_baby_wash_800ml_amazon": [
+    {
+      "date": "2026-09-04",
+      "price": 9.92
+    }
+  ],
+  "old_spice_shampoo_650ml_amazon": [
+    {
+      "date": "2026-09-04",
+      "price": 7.99
+    }
+  ],
+  "barebells_cookies_caramel_amazon": [
+    {
+      "date": "2026-09-04",
+      "price": 45.99
+    }
+  ],
+  "cetaphil_calendula_lotion_400ml_amazon": [
+    {
+      "date": "2026-09-04",
+      "price": 15.99
+    }
+  ],
+  "cetaphil_shea_butter_lotion_400ml_amazon": [
+    {
+      "date": "2026-09-04",
+      "price": 15.99
+    }
+  ]
+}
