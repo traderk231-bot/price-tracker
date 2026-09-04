@@ -35,6 +35,7 @@ from playwright.sync_api import sync_playwright
 BASE_DIR = Path(__file__).parent
 PRODUCTS_FILE = BASE_DIR / "products.json"
 HISTORY_FILE = BASE_DIR / "price_history.json"
+DEBUG_DIR = BASE_DIR / "debug"
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
@@ -133,9 +134,9 @@ def parse_price_text(text):
     return None
 
 
-def fetch_price(page, url, platform):
-    page.goto(url, wait_until="domcontentloaded", timeout=45000)
-    page.wait_for_timeout(2000)  # 俾少少時間畀JS render完
+def fetch_price(page, url, platform, debug_id=None):
+    response = page.goto(url, wait_until="domcontentloaded", timeout=45000)
+    page.wait_for_timeout(3000)  # 俾少少時間畀JS render完
 
     price = extract_price_from_jsonld(page)
     if price is not None:
@@ -148,6 +149,19 @@ def fetch_price(page, url, platform):
     price = extract_price_from_regex(page)
     if price is not None:
         return price, "regex"
+
+    # 三層都失敗 -> 截圖 + 存HTML,等你可以睇返個page當其時真係顯示緊乜嘢
+    # (例如係咪畀網站redirect咗去CAPTCHA/機器人驗證page)
+    status = response.status if response else "n/a"
+    final_url = page.url
+    print(f"[DEBUG] http_status={status} final_url={final_url}")
+    if debug_id:
+        try:
+            DEBUG_DIR.mkdir(parents=True, exist_ok=True)
+            page.screenshot(path=str(DEBUG_DIR / f"{debug_id}.png"))
+            (DEBUG_DIR / f"{debug_id}.html").write_text(page.content(), encoding="utf-8")
+        except Exception as exc:  # noqa: BLE001
+            print(f"[警告] 存debug截圖/HTML失敗: {exc}")
 
     return None, None
 
@@ -193,11 +207,20 @@ def main():
 
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(user_agent=USER_AGENT)
+        context = browser.new_context(
+            user_agent=USER_AGENT,
+            locale="en-CA",
+            timezone_id="America/Toronto",
+            viewport={"width": 1366, "height": 900},
+            extra_http_headers={"Accept-Language": "en-CA,en;q=0.9"},
+        )
+        page = context.new_page()
 
         for product in active_products:
             try:
-                price, method = fetch_price(page, product["url"], product["platform"])
+                price, method = fetch_price(
+                    page, product["url"], product["platform"], debug_id=product["id"]
+                )
             except Exception as exc:  # noqa: BLE001 - 想乜錯都攞埋唔想成個run死咗
                 print(f"[錯誤] {product['id']} 攞價失敗: {exc}")
                 price, method = None, None
