@@ -39,6 +39,10 @@
     {
       "date": "2026-09-06",
       "price": 45.99
+    },
+    {
+      "date": "2026-09-07",
+      "price": 45.99
     }
   ],
   "cetaphil_calendula_lotion_400ml_amazon": [
@@ -53,6 +57,10 @@
     {
       "date": "2026-09-06",
       "price": 15.99
+    },
+    {
+      "date": "2026-09-07",
+      "price": 14.84
     }
   ],
   "cetaphil_shea_butter_lotion_400ml_amazon": [
@@ -66,6 +74,10 @@
     },
     {
       "date": "2026-09-06",
+      "price": 15.99
+    },
+    {
+      "date": "2026-09-07",
       "price": 15.99
     }
   ]
