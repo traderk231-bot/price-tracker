@@ -23,6 +23,10 @@
     {
       "date": "2026-09-10",
       "price": 9.92
+    },
+    {
+      "date": "2026-09-11",
+      "price": 9.92
     }
   ],
   "old_spice_shampoo_650ml_amazon": [
@@ -48,6 +52,10 @@
     },
     {
       "date": "2026-09-10",
+      "price": 9.97
+    },
+    {
+      "date": "2026-09-11",
       "price": 9.97
     }
   ],
@@ -79,6 +87,10 @@
     {
       "date": "2026-09-10",
       "price": 45.99
+    },
+    {
+      "date": "2026-09-11",
+      "price": 45.99
     }
   ],
   "cetaphil_calendula_lotion_400ml_amazon": [
@@ -109,6 +121,10 @@
     {
       "date": "2026-09-10",
       "price": 14.84
+    },
+    {
+      "date": "2026-09-11",
+      "price": 14.84
     }
   ],
   "cetaphil_shea_butter_lotion_400ml_amazon": [
@@ -138,6 +154,10 @@
     },
     {
       "date": "2026-09-10",
+      "price": 15.99
+    },
+    {
+      "date": "2026-09-11",
       "price": 15.99
     }
   ]
